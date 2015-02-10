@@ -52,6 +52,7 @@
   // }
 
   function draw_line(line, position, pixel_size, callback) {
+    cncserver.api.pen.move(position);
     for(j = 0; j < line.length; j++) {
       if(line[j] === 1) {
         cncserver.api.pen.down();
@@ -90,7 +91,7 @@
     });
   }
 
-  draw_points(data, {x: 10, y: 42}, 1, 1);
+  draw_points(data, {x: 10, y: 47}, 1, 1);
 
   // Fun thing for testing:
   //  function draw_random() {
