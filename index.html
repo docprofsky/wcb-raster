@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="jquery.js"></script>
+  <script src="cncserver.client.api.js"></script>
+</head>
+
+<body>
+  <script type="text/javascript">
+  cncserver.api.server = {
+     domain: 'localhost',
+     port: 4242,
+     protocol: 'http',
+     version: '1'
+   };
+
+   drawPos = [
+     {x: 20, y: 20},
+     {x: 20, y: 50},
+     {x: 50, y: 50},
+     {x: 50, y: 20},
+     {x: 20, y: 20}
+   ];
+
+   for(var i =0; i < drawPos.length; i++) {
+     cncserver.api.pen.move(drawPos[i]);
+     console.log(drawPos[i]);
+   }
+
+  //  cncserver.api.pen.move({x: 0, y: 0}, function () {cncserver.api.pen.move({x:50, y:50});console.log("part 2");});
+   cncserver.api.pen.move({x: 0, y: 0});
+
+   console.log("working");
+   cncserver.api.motors.unlock(function () {console.log("unlock");});
+  </script>
+</body>
+
+</html>
