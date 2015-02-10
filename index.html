@@ -5,6 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <script src="jquery.js"></script>
   <script src="cncserver.client.api.js"></script>
+  <script src="cncserver.client.commander.js"></script>
 </head>
 
 <body>
@@ -15,6 +16,14 @@
      protocol: 'http',
      version: '1'
    };
+   // Drawing params
+   var pixelSize = {
+     w: 8,
+     h: 2
+   };
+
+   var run = cncserver.cmd.run; // Command runner shortcut var
+
 
   //  drawPos = [
   //    {x: 20, y: 20},
@@ -34,10 +43,12 @@
   //
   //  cncserver.api.motors.unlock(function () {console.log("unlock");});
 
-  var data = [[0,0,1,1,1,1,0,0,1,0],
-              [1,1,1,1,1,1,0,0,0,1],
-              [0,1,0,1,0,1,0,1,0,1],
-              [1,1,0,0,0,1,1,0,0,1]];
+  var data = [
+    [0,0,1,1,1,1,0,0,1,0],
+    [1,1,1,1,1,1,0,0,0,1],
+    [0,1,0,1,0,1,0,1,0,1],
+    [1,1,0,0,0,1,1,0,0,1]
+  ];
 
   //  for(i = 0; i < points.length; i++) {
   //     for(j = 0; j < points[i].length; j++) {
@@ -51,24 +62,6 @@
   //     cncserver.api.pen.up();
   // }
 
-  function draw_line(line, position, pixel_size, callback) {
-    cncserver.api.pen.move(position);
-    for(j = 0; j < line.length; j++) {
-      if(line[j] === 1) {
-        cncserver.api.pen.down();
-      } else {
-        cncserver.api.pen.up();
-      }
-      // if(j++ < line.length){
-        cncserver.api.pen.move({x: j * pixel_size + position.x, y: position.y});
-      // } else {
-      //   cncserver.api.pen.move({x: j * pixel_size + position.x, y: position.y}, callback);
-      // }
-    }
-    cncserver.api.pen.up(callback);
-  }
-
-
   // var line = 0;
   // draw_line(data[line], {x: 10, y: 28 + line}, 1, );
   // if(line >= data.length) {
@@ -77,18 +70,25 @@
   //   cncserver.api
   // }
 
-  function draw_points(points, position, pixel_size, line_spacing, last_line) {
-    if(last_line === undefined) {
-      last_line = 0;
-    } else {
-      last_line += 1;
-    }
-    if(last_line >= points.length) return;
+  function draw_points(points, offset) {
+    for (var y in points) { // Go through each row
+      for (var x in points[y]) { // Go through each column
+        // Move to first/next position
+        run('move', {x: offset.x + (pixelSize.w * x), y: offset.y + (pixelSize.h * y)});
 
-    draw_line(points[last_line], {x: position.x, y: position.y + line_spacing * last_line}, pixel_size, function() {
-      cncserver.api.pen.up(function() {
-        draw_points(points, position, pixel_size, line_spacing, last_line);});
-    });
+        if(points[y][x] === 1) {
+          run('down');
+        } else {
+          run('up');
+        }
+      }
+
+      // Move for the last pixel and reset
+      run('move', {x: offset.x + (pixelSize.w * x + 1), y: offset.y + (pixelSize.h * y + 1)});
+      run('up');
+    }
+
+    run('park'); // We're done!
   }
 
   draw_points(data, {x: 10, y: 47}, 1, 1);
