@@ -32,9 +32,8 @@
   //  cncserver.api.pen.move({x: 0, y: 0}, function () {cncserver.api.pen.move({x:50, y:50});console.log("part 2");});
    cncserver.api.pen.move({x: 0, y: 0});
 
-   console.log("working");
    cncserver.api.motors.unlock(function () {console.log("unlock");});
-   
+
   // Fun thing for testing:
   //  function draw_random() {
   //    cncserver.api.pen.move({x: (Math.random() * 97) + 3, y: Math.random() * 100}, draw_random);
