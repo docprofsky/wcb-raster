@@ -34,6 +34,13 @@
 
    console.log("working");
    cncserver.api.motors.unlock(function () {console.log("unlock");});
+   
+  // Fun thing for testing:
+  //  function draw_random() {
+  //    cncserver.api.pen.move({x: (Math.random() * 97) + 3, y: Math.random() * 100}, draw_random);
+  //  }
+  //  console.log("starting random");
+  //  draw_random();
   </script>
 </body>
 
