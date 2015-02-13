@@ -131,21 +131,28 @@
   // }
 
   function draw_points(points, offset) {
+    var penPosition = 0; // Pen is up; 1 when pen is down
+    run('up');
+
     for (var y in points) { // Go through each row
       for (var x in points[y]) { // Go through each column
         // Move to first/next position
-        run('move', {x: offset.x + (pixelSize.w * x), y: offset.y + (pixelSize.h * y)});
+        if(points[y][x] !== penPosition) {
+          run('move', {x: offset.x + (pixelSize.w * x), y: offset.y + (pixelSize.h * y)});
 
-        if(points[y][x] === 1) {
-          run('down');
-        } else {
-          run('up');
+          penPosition = points[y][x];
+          if(points[y][x] === 1) {
+            run('down');
+          } else {
+            run('up');
+          }
         }
       }
 
       // Move for the last pixel and reset
       run('move', {x: offset.x + (pixelSize.w * x +  1), y: offset.y + (pixelSize.h * y)});
       run('up');
+      penPosition = 0;
     }
 
     run('park'); // We're done!
