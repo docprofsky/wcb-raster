@@ -31,9 +31,9 @@
       var data = imageData.data;
 
       var red = 0;
-      var green = 0;
-      var blue = 0;
-      var alpha = 0;
+      // var green = 0;
+      // var blue = 0;
+      // var alpha = 0;
 
       // iterate over all pixels
       // for(var i = 0, n = data.length; i < n; i += 4) {
@@ -50,9 +50,9 @@
 
         for(var x = 0; x < imageWidth; x++) {
           red = data[((imageWidth * y) + x) * 4];
-          green = data[((imageWidth * y) + x) * 4 + 1];
-          blue = data[((imageWidth * y) + x) * 4 + 2];
-          alpha = data[((imageWidth * y) + x) * 4 + 3];
+          // green = data[((imageWidth * y) + x) * 4 + 1];
+          // blue = data[((imageWidth * y) + x) * 4 + 2];
+          // alpha = data[((imageWidth * y) + x) * 4 + 3];
 
           image_pixel_draw[y][x] = red <= 50 ? 1 : 0;
         }
