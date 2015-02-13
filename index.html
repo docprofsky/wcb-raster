@@ -9,7 +9,67 @@
 </head>
 
 <body>
+  <canvas id="imageCanvas" width="1000", height="1000"></canvas>
+
+  <script>
+    // This is based off http://www.html5canvastutorials.com/advanced/html5-canvas-get-image-data-tutorial/
+    var image_pixel_draw = [];
+
+    function drawImage(imageObj) {
+      var canvas = document.getElementById('imageCanvas');
+      var context = canvas.getContext('2d');
+      var imageX = 0;
+      var imageY = 0;
+      var imageWidth = imageObj.width;
+      var imageHeight = imageObj.height;
+
+      // image_pixel_draw = Array(imageHeight);
+
+      context.drawImage(imageObj, imageX, imageY);
+
+      var imageData = context.getImageData(imageX, imageY, imageWidth, imageHeight);
+      var data = imageData.data;
+
+      var red = 0;
+      var green = 0;
+      var blue = 0;
+      var alpha = 0;
+
+      // iterate over all pixels
+      // for(var i = 0, n = data.length; i < n; i += 4) {
+      //   red = data[i];
+      //   green = data[i + 1];
+      //   blue = data[i + 2];
+      //   alpha = data[i + 3];
+      // }
+
+      // iterate over all pixels based on x and y coordinates
+      for(var y = 0; y < imageHeight; y++) {
+        // loop through each column
+        image_pixel_draw[y] = []; // Initialize the second dimension of the array
+
+        for(var x = 0; x < imageWidth; x++) {
+          red = data[((imageWidth * y) + x) * 4];
+          green = data[((imageWidth * y) + x) * 4 + 1];
+          blue = data[((imageWidth * y) + x) * 4 + 2];
+          alpha = data[((imageWidth * y) + x) * 4 + 3];
+
+          image_pixel_draw[y][x] = red <= 50 ? 1 : 0;
+        }
+      }
+    }
+
+    var imageObj = new Image();
+    imageObj.crossOrigin = "anonymous";
+    imageObj.onload = function() {
+      drawImage(this);
+    };
+    imageObj.src = 'flowchart.png';
+  </script>
+
   <script type="text/javascript">
+  console.table(image_pixel_draw);
+
   cncserver.api.server = {
      domain: 'localhost',
      port: 4242,
@@ -18,8 +78,8 @@
    };
    // Drawing params
    var pixelSize = {
-     w: 8,
-     h: 2
+     w: 0.15,
+     h: 0.15
    };
 
    var run = cncserver.cmd.run; // Command runner shortcut var
@@ -91,7 +151,10 @@
     run('park'); // We're done!
   }
 
-  draw_points(data, {x: 10, y: 47});
+  // draw_points(data, {x: 10, y: 55});
+
+  // Run this to draw the image. This is less than nice to cncserver.
+  // draw_points(image_pixel_draw, {x: 30, y: 10});
 
   // Fun thing for testing:
   //  function draw_random() {
