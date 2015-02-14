@@ -150,7 +150,7 @@
       }
 
       // Move for the last pixel and reset
-      run('move', {x: offset.x + (pixelSize.w * (x + 1)), y: offset.y + (pixelSize.h * y)});
+      run('move', {x: offset.x + (pixelSize.w * (Number(x) + 1)), y: offset.y + (pixelSize.h * y)});
       run('up');
       penPosition = 0;
     }
