@@ -35,14 +35,6 @@
       // var blue = 0;
       // var alpha = 0;
 
-      // iterate over all pixels
-      // for(var i = 0, n = data.length; i < n; i += 4) {
-      //   red = data[i];
-      //   green = data[i + 1];
-      //   blue = data[i + 2];
-      //   alpha = data[i + 3];
-      // }
-
       // iterate over all pixels based on x and y coordinates
       for(var y = 0; y < imageHeight; y++) {
         // loop through each column
@@ -84,51 +76,12 @@
 
    var run = cncserver.cmd.run; // Command runner shortcut var
 
-
-  //  drawPos = [
-  //    {x: 20, y: 20},
-  //    {x: 20, y: 50},
-  //    {x: 50, y: 50},
-  //    {x: 50, y: 20},
-  //    {x: 20, y: 20}
-  //  ];
-  //
-  //  for(var i =0; i < drawPos.length; i++) {
-  //    cncserver.api.pen.move(drawPos[i]);
-  //    console.log(drawPos[i]);
-  //  }
-  //
-  // //  cncserver.api.pen.move({x: 0, y: 0}, function () {cncserver.api.pen.move({x:50, y:50});console.log("part 2");});
-  //  cncserver.api.pen.move({x: 0, y: 0});
-  //
-  //  cncserver.api.motors.unlock(function () {console.log("unlock");});
-
   var data = [
     [0,0,1,1,1,1,0,0,1,0],
     [1,1,1,1,1,1,0,0,0,1],
     [0,1,0,1,0,1,0,1,0,1],
     [1,1,0,0,0,1,1,0,0,1]
   ];
-
-  //  for(i = 0; i < points.length; i++) {
-  //     for(j = 0; j < points[i].length; j++) {
-  //       if(points[i][j] === 1) {
-  //           cncserver.api.pen.down();
-  //         } else {
-  //           cncserver.api.pen.up();
-  //         }
-  //       cncserver.api.pen.move({x: j+10, y: i+10});
-  //     }
-  //     cncserver.api.pen.up();
-  // }
-
-  // var line = 0;
-  // draw_line(data[line], {x: 10, y: 28 + line}, 1, );
-  // if(line >= data.length) {
-  //   cncserver.api.pen.up();
-  // } else {
-  //   cncserver.api
-  // }
 
   function draw_points(points, offset) {
     var penPosition = 0; // Pen is up; 1 when pen is down
