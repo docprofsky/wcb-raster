@@ -165,6 +165,16 @@
     run('up');
   }
 
+  function penDotSizeTest(location, length, width, resoultion) {
+    drawLine(location, {x: location.x, y: location.y + length});
+    drawLine(location, {x: location.x + width, y: location.y + length});
+
+    for(var i = location.y; i < location.y + length; i += resoultion) {
+      console.log(i, i - location.y);
+      drawLine({x: location.x - 1, y: i}, {x:location.x - 0.5, y: i});
+    }
+  }
+
   // draw_points(data, {x: 10, y: 55});
 
   // Run this to draw the image.
