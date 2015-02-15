@@ -54,7 +54,7 @@
           // blue = data[((imageWidth * y) + x) * 4 + 2];
           // alpha = data[((imageWidth * y) + x) * 4 + 3];
 
-          image_pixel_draw[y][x] = red <= 50 ? 1 : 0;
+          image_pixel_draw[y][x] = red <= 127 ? 1 : 0;
         }
       }
     }
