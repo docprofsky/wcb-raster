@@ -75,13 +75,6 @@
 
    var run = cncserver.cmd.run; // Command runner shortcut var
 
-  var data = [
-    [0,0,1,1,1,1,0,0,1,0],
-    [1,1,1,1,1,1,0,0,0,1],
-    [0,1,0,1,0,1,0,1,0,1],
-    [1,1,0,0,0,1,1,0,0,1]
-  ];
-
   function draw_points(points, offset) {
     var penPosition = 0; // Pen is up; 1 when pen is down
     run('up');
