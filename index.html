@@ -9,13 +9,38 @@
 </head>
 
 <body>
-  <canvas id="imageCanvas" width="1000", height="1000"></canvas>
+  <canvas id="imageCanvas" ></canvas>
+  <input type="file" id="imageLoader" name="imageLoader" />
+
+  <script>
+    var imageLoader = document.getElementById('imageLoader');
+    imageLoader.addEventListener('change', handleImage, false);
+    var canvas = document.getElementById('imageCanvas');
+    var ctx = canvas.getContext('2d');
+
+
+  function handleImage(e){
+    var reader = new FileReader();
+    reader.onload = function(event){
+      var img = new Image();
+      img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img,0,0);
+        drawImage(this);
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  </script>
 
   <script>
     // This is based off http://www.html5canvastutorials.com/advanced/html5-canvas-get-image-data-tutorial/
     var image_pixel_draw = [];
 
     function drawImage(imageObj) {
+      image_pixel_draw = [];
       var canvas = document.getElementById('imageCanvas');
       var context = canvas.getContext('2d');
       var imageX = 0;
@@ -51,11 +76,11 @@
       }
     }
 
-    var imageObj = new Image();
-    imageObj.onload = function () {
-      drawImage(this);
-    };
-    imageObj.src = 'flowchart.png';
+    // var imageObj = new Image();
+    // imageObj.onload = function () {
+    //   drawImage(this);
+    // };
+    // imageObj.src = 'flowchart.png';
   </script>
 
   <script type="text/javascript">
