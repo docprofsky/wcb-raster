@@ -158,6 +158,13 @@
     run('park'); // We're done!
   }
 
+  function drawLine(start, stop) {
+    run('move', start);
+    run('down');
+    run('move', stop);
+    run('up');
+  }
+
   // draw_points(data, {x: 10, y: 55});
 
   // Run this to draw the image.
