@@ -24,10 +24,8 @@
     reader.onload = function(event){
       var img = new Image();
       img.onload = function () {
-        canvas.width = img.width <= Math.floor(100 / pixelSize.w) ? Math.floor(100 /
-          pixelSize.w) : img.width;
-        canvas.height = img.height <= Math.floor(100 / pixelSize.h) ? Math.floor(100 /
-          pixelSize.h) : img.height;
+        canvas.width = Math.max(img.height, Math.floor(100 / pixelSize.h));
+        canvas.height = Math.max(img.width, Math.floor(100 / pixelSize.w));
         ctx.drawImage(img,0,0);
         drawImage(this);
 
