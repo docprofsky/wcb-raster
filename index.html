@@ -24,10 +24,19 @@
     reader.onload = function(event){
       var img = new Image();
       img.onload = function () {
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = img.width <= Math.floor(100 / pixelSize.w) ? Math.floor(100 /
+          pixelSize.w) : img.width;
+        canvas.height = img.height <= Math.floor(100 / pixelSize.h) ? Math.floor(100 /
+          pixelSize.h) : img.height;
         ctx.drawImage(img,0,0);
         drawImage(this);
+
+        ctx.beginPath();
+        ctx.moveTo(Math.floor(100 / pixelSize.w), 0);
+        ctx.lineTo(Math.floor(100 / pixelSize.w), Math.floor(100 / pixelSize.h));
+        ctx.lineTo(0, Math.floor(100 / pixelSize.h));
+        ctx.strokeStyle = "red";
+        ctx.stroke();
       };
       img.src = event.target.result;
     };
