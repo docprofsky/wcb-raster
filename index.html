@@ -12,6 +12,9 @@
   <canvas id="imageCanvas"></canvas>
   <input type="file" id="imageLoader" name="imageLoader">
   <fieldset>
+    <label for="on-threshold">On threshold:</label>
+    <input type="text" id="on-threshold" value="127">
+    <br>
     <button id="draw">Draw</button>
     <br>
     <table>
@@ -56,6 +59,7 @@
       w: 0.18,   // Measured using penDotSizeTest for a Sharpie Pen Fine Point
       h: 0.24825 // Calculated based on WCB aspect ratio
     };
+    var threshold = 127;
 
   function handleImage(e){
     var reader = new FileReader();
@@ -114,7 +118,7 @@
           // blue = data[((imageWidth * y) + x) * 4 + 2];
           // alpha = data[((imageWidth * y) + x) * 4 + 3];
 
-          image_pixel_draw[y][x] = red <= 127 ? 1 : 0;
+          image_pixel_draw[y][x] = red <= threshold ? 1 : 0;
         }
       }
     }
@@ -197,6 +201,9 @@
       $('#w-size').val(pixelSize.w);
       $('#h-size').val(pixelSize.h);
 
+      $('#on-threshold').change(function(e) {
+        threshold = parseFloat($('#on-threshold').val());
+      });
       $('#x-offset, #y-offset').change(function(e) {
         drawingOffset[e.target.id.split('-')[0]] = parseFloat($(e.target).val());
       });
