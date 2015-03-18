@@ -11,12 +11,20 @@
 <body>
   <canvas id="imageCanvas" ></canvas>
   <input type="file" id="imageLoader" name="imageLoader">
+  <fieldset>
+    <button id="draw">Draw</button>
+    <br>
+    <label for="x-offset">X offset:</label>
+    <input type="text" id="x-offset" value="0">
+    <label for="y-offset">Y offset:</label>
+    <input type="text" id="y-offset" value="0">
+  </fieldset>
 
   <script>
     $('#imageLoader').change(handleImage);
     var canvas = $('#imageCanvas')[0];
     var ctx = canvas.getContext('2d');
-
+    var drawingOffset = {x: 0, y: 0};
 
   function handleImage(e){
     var reader = new FileReader();
@@ -158,6 +166,16 @@
     // }
     // console.log("starting random");
     // draw_random();
+
+    function bindElements() {
+      $('#x-offset, #y-offset').change(function(e) {
+        drawingOffset[e.target.id.split('-')[0]] = parseFloat($(e.target).val());
+      });
+      $('#draw').click(function(e) {
+        draw_points(image_pixel_draw, drawingOffset);
+      });
+    }
+    $(bindElements);
   </script>
 </body>
 
