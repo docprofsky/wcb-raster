@@ -13,9 +13,8 @@
   <input type="file" id="imageLoader" name="imageLoader">
 
   <script>
-    var imageLoader = document.getElementById('imageLoader');
-    imageLoader.addEventListener('change', handleImage, false);
-    var canvas = document.getElementById('imageCanvas');
+    $('#imageLoader').change(handleImage);
+    var canvas = $('#imageCanvas')[0];
     var ctx = canvas.getContext('2d');
 
 
