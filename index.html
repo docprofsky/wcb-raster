@@ -50,7 +50,12 @@
     $('#imageLoader').change(handleImage);
     var canvas = $('#imageCanvas')[0];
     var ctx = canvas.getContext('2d');
+    // Drawing params
     var drawingOffset = {x: 0, y: 0};
+    var pixelSize = {
+      w: 0.18,   // Measured using penDotSizeTest for a Sharpie Pen Fine Point
+      h: 0.24825 // Calculated based on WCB aspect ratio
+    };
 
   function handleImage(e){
     var reader = new FileReader();
@@ -126,15 +131,10 @@
       protocol: 'http',
       version: '1'
     };
-    // Drawing params
-    var pixelSize = {
-      w: 0.18,   // Measured using penDotSizeTest for a Sharpie Pen Fine Point
-      h: 0.24825 // Calculated based on WCB aspect ratio
-    };
 
     var run = cncserver.cmd.run; // Command runner shortcut var
 
-    function draw_points(points, offset) {
+    function draw_points(points, offset, pixelSize) {
       var penPosition = 0; // Pen is up; 1 when pen is down
       run('up');
 
@@ -194,11 +194,17 @@
     // draw_random();
 
     function bindElements() {
+      $('#w-size').val(pixelSize.w);
+      $('#h-size').val(pixelSize.h);
+
       $('#x-offset, #y-offset').change(function(e) {
         drawingOffset[e.target.id.split('-')[0]] = parseFloat($(e.target).val());
       });
+      $('#w-size, #h-size').change(function(e) {
+        pixelSize[e.target.id.split('-')[0]] = parseFloat($(e.target).val());
+      });
       $('#draw').click(function(e) {
-        draw_points(image_pixel_draw, drawingOffset);
+        draw_points(image_pixel_draw, drawingOffset, pixelSize);
       });
     }
     $(bindElements);
